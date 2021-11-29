@@ -1,0 +1,36 @@
+version: '3.2'
+
+services:
+  w5:
+    image: loca1h0st/w5:latest
+    container_name: W5
+    ports:
+      - "8888"
+    networks:
+      - front
+      - backend
+    build: ./Dockerfile
+    depends_on:
+      - db
+      - redis
+  
+  db:
+    image: mysql:5.7.37
+    container_name: W5_MYSQL
+    networks:
+      - backend
+    environment:
+      - MYSQL_ROOT_PASSWORD=12345678
+    volumes:
+      - $PWD/www/docker/sql:/docker-entrypoint-initdb.d
+      - $PWD/data:/var/lib/mysql
+  
+  redis:
+    image: redis:latest
+    container_name: W5_REDIS
+    networks:
+      - backend
+
+networks:
+  front:
+  backend:
