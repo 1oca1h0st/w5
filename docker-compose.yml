@@ -15,7 +15,7 @@ services:
       - redis
   
   db:
-    image: mysql:5.7.37
+    image: mysql:5.7.36
     container_name: W5_MYSQL
     networks:
       - backend
